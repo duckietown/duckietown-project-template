@@ -1,7 +1,4 @@
 
-[![CircleCI](https://circleci.com/gh/duckietown/duckietown-project-template.svg?style=shield)](https://circleci.com/gh/duckietown/duckietown-project-template)
-
-
 # Duckietown Project Template
 
 
