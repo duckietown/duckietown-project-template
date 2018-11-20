@@ -5,7 +5,8 @@
 # Duckietown Project Template
 
 
-This repo contains a template for a Python/ROS library for Duckietown.
+This repo contains a template for a Python/ROS library for Duckietown
+using the templating system [Cookiecutter](https://github.com/audreyr/cookiecutter).
 
 
 To create a repository starting from this template, first install the latest Cookiecutter:
