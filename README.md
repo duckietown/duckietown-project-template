@@ -18,9 +18,23 @@ Then you can run:
 
 Answer the questions and you will create the template for your repository.
 
+## Features
+
+- [x] Python setup.py
+- [x] PyPI
+- [x] Unit tests
+- [x] Code coverage
+- [x] Code coverage using Coveralls
+- [x] CircleCI integration
+- [ ] ROS node template
+- [ ] Support for YAML configuration files (easy_algo)
+- [ ] Support for challenge definition/submission
+
+
+
 ## Example
 
-The repo [duckietown-foobar][foobar] is generated using [go.sh](go.sh).
+The repo [duckietown-foobar][foobar] is generated using this template.
 
 
 [foobar]: https://github.com/duckietown/duckietown-foobar 
