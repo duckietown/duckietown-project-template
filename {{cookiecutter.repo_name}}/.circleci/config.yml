@@ -3,8 +3,8 @@ workflows:
   version: 2
   test:
     jobs:
-      - test-3.7
-      - test-2.7
+    - test-3.7
+    - test-2.7
 jobs:
   test-3.7: &test-template
     environment:
@@ -12,101 +12,91 @@ jobs:
       # default is /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
       PATH: /root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     docker:
-      - image: python:3.7
-    working_directory: ~/repo/lib-foobar
+    - image: python:3.7
     steps:
-      - checkout
-      - run:
-          name: Install Git LFS
-          command: |
-            curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-            apt-get update
-            apt-get install -y git-lfs openssh-client
-            git lfs install
-            mkdir -p ~/.ssh
-            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-            ssh git@github.com git-lfs-authenticate "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}" download
-            git lfs pull
-      - run:
-          name: Install deps
-          command: |
-            echo PATH=$PATH
-            pip install -q --user --upgrade -r requirements.txt
+    - checkout
+    - run:
+        name: Install Git LFS
+        command: |
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt-get update
+          apt-get install -y git-lfs openssh-client
+          git lfs install
+          mkdir -p ~/.ssh
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+          ssh git@github.com git-lfs-authenticate "${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}" download
+          git lfs pull
+    - run:
+        name: Install deps
+        command: |
+          echo PATH=$PATH
+          cd lib-{{cookiecutter.project_slug}}
+          pip install -q --user --upgrade -r requirements.txt
 
-      - run:
-          name: List deps
-          command: |
-            mkdir -p artifacts
-            pip freeze | tee artifacts/pip-freeze.txt
+    - run:
+        name: List deps
+        command: |
+          cd lib-{{cookiecutter.project_slug}}
+          mkdir -p artifacts
+          pip freeze | tee artifacts/pip-freeze.txt
 
-      - run:
-          name: setup.py develop
-          command: |
-            python setup.py develop --prefix ~/.local --no-deps
+    - run:
+        name: setup.py develop
+        command: |
+          cd lib-{{cookiecutter.project_slug}}
+          python setup.py develop --prefix ~/.local --no-deps
 
-      - run:
-          name: Run tests
-          command: |
-            make tests-coverage-single-nocontracts
+    - run:
+        name: Run tests
+        command: |
+          cd lib-{{cookiecutter.project_slug}}
+          make tests-coverage-single-nocontracts
 
-      - run:
-          name: Notebooks
-          command: |
-            make -C notebooks || true
+    - run:
+        name: Notebooks
+        command: |
+          cd lib-{{cookiecutter.project_slug}}
+          make -C notebooks || true
 
-      - run:
-          name: Example draw maps
-          command: |
-            make tests-maps-coverage
+    - run:
+        name: Coverage analysis
+        when: always
+        command: |
+          cd lib-{{cookiecutter.project_slug}}
+          make coverage-report
 
-#      - run:
-#          name: Example LFV download
-#          command: |
-#            rm test-data/LFV.json
-#            wget https://github.com/duckietown/duckietown-world/raw/master18/test-data/LFV.json -O test-data/LFV.json
+    - run:
+        name: Coveralls submission
+        when: always
+        command: |
+          cd lib-{{cookiecutter.project_slug}}
+          make coverage-coveralls
 
-      - run:
-          name: Example LFV
-          command: |
-            make tests-LFV-coverage
+    - run:
+        name: Create JUnit output
+        when: always
+        command: |
+          cd lib-{{cookiecutter.project_slug}}
+          make junit
 
+    - test-results-store:
+        path: lib-{{cookiecutter.project_slug}}/out-comptests/junit
 
-      - run:
-          name: Coverage analysis
-          when: always
-          command: |
-            make coverage-report
+    - store_artifacts:
+        path: lib-{{cookiecutter.project_slug}}/out-comptests/{{cookiecutter.python_package}}_tests
+        destination: {{cookiecutter.python_package}}_tests
 
-      - run:
-          name: Coveralls submission
-          when: always
-          command: |
-            make coverage-coveralls
+    - store_artifacts:
+        path: lib-{{cookiecutter.project_slug}}/artifacts
+        destination: artifacts
 
-      - run:
-          name: Create JUnit output
-          when: always
-          command: |
-            make junit
+    - store_artifacts:
+        path: lib-{{cookiecutter.project_slug}}/out_coverage
+        destination: coverage
 
-      - test-results-store:
-          path: out-comptests/junit
-
-      - store_artifacts:
-          path: out-comptests/duckietown_world_tests
-          destination: duckietown_world_tests
-          
-      - store_artifacts:
-          path: artifacts
-          destination: artifacts
-
-      - store_artifacts:
-          path: out_coverage
-          destination: coverage
-
-      - store_artifacts:
-          path: notebooks
-          destination: notebooks
+    - store_artifacts:
+        path: lib-{{cookiecutter.project_slug}}/notebooks
+        destination: notebooks
 
   test-2.7:
     <<: *test-template

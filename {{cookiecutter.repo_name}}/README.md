@@ -1,3 +1,12 @@
+[![CircleCI](https://circleci.com/gh/duckietown/{{cookiecutter.repo_name}}.svg?style=shield)](https://circleci.com/gh/duckietown/{{cookiecutter.repo_name}})
+
+[![Coverage Status](https://coveralls.io/repos/github/duckietown/{{cookiecutter.repo_name}}/badge.svg?branch=master18)](https://coveralls.io/github/duckietown/{{cookiecutter.repo_name}}?branch=master18)
+
+[![PyPI status](https://img.shields.io/pypi/status/{{cookiecutter.pypi_package}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.pypi_package}}/)
+
+
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/{{cookiecutter.pypi_package}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.pypi_package}}/)
+
 
 # {{cookiecutter.project_name}}
 

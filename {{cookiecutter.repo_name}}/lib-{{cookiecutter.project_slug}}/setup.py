@@ -19,8 +19,8 @@ def get_version(filename):
 
 version = get_version(filename='src/{{cookiecutter.python_package}}/__init__.py')
 
-setup(name='duckietown-world',
-
+setup(name='{{cookiecutter.pypi_package}}',
+      description='{{cookiecutter.project_description}}',
       version=version,
       download_url='http://github.com/duckietown/{{cookiecutter.repo_name}}/tarball/%s' % version,
       package_dir={'': 'src'},
@@ -46,5 +46,17 @@ setup(name='duckietown-world',
           'console_scripts': [
               'dt-{{cookiecutter.project_slug}}-cli = {{cookiecutter.python_package}}.cli:cli_main',
           ]
-      }
+      },
+      classifiers=[
+          # How mature is this project? Common values are
+          #   3 - Alpha
+          #   4 - Beta
+          #   5 - Production/Stable
+          'Development Status :: 3 - Alpha',
+
+          # Specify the Python versions you support here. In particular, ensure
+          # that you indicate whether you support Python 2, Python 3 or both.
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 3',
+      ],
       )

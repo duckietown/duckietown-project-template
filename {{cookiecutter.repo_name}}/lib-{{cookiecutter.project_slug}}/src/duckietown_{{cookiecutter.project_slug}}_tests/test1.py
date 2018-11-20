@@ -15,7 +15,7 @@ def test_sum2():
 
 # use comptest_fails for a test that is supposed to fail
 @comptest_fails
-def test_sum2():
+def test_supposed_to_fail():
     raise Exception()
 
 

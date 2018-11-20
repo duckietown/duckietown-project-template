@@ -16,11 +16,11 @@ upload:
 	twine upload dist/*
 
 
-comptest_package=duckietown_world_tests
+comptest_package={{cookiecutter.python_package}}_tests
 out=out-comptests
 coverage_dir=out-coverage
-coverage_include='*src/duckietown_world*'
-coveralls_repo_token=Yp4i32KwzL4s6C76DfjJ3e6NqUgkXsv0X
+coverage_include='*src/{{cookiecutter.python_package}}*'
+coveralls_repo_token={{cookiecutter.coveralls_repo_token}}
 coverage_run=coverage run
 
 tests-clean:
@@ -46,14 +46,6 @@ tests-coverage:
 	$(MAKE) coverage-report
 	$(MAKE) coverage-coveralls
 
-tests-LFV-coverage:
-	mkdir -p artifacts
-	$(coverage_run) `which dt-world-draw-log` --filename test-data/LFV.json --output artifacts/LFV
-
-tests-maps-coverage:
-	mkdir -p artifacts
-	$(coverage_run) `which dt-world-draw-maps` --output artifacts/maps
-
 
 tests-coverage-single-nocontracts:
 	-DISABLE_CONTRACTS=1 comptests -o $(out) --nonose -c "exit"  $(comptest_package)
@@ -72,9 +64,8 @@ coverage-report:
 	coverage html -d $(coverage_dir)
 
 coverage-coveralls:
-	# without --nogit, coveralls does not find the source code
 	COVERALLS_REPO_TOKEN=$(coveralls_repo_token) coveralls
-	#--nogit --base_dir .
+
 
 
 
