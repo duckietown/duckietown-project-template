@@ -24,10 +24,11 @@ Answer the questions and you will create the template for your repository.
 - [x] Code coverage
 - [x] Code coverage using Coveralls
 - [x] CircleCI integration
+- [ ] Duckiebook template
 - [ ] ROS node template
 - [ ] Support for YAML configuration files (easy_algo)
 - [ ] Support for challenge definition/submission
-
+- [ ] Docker containers
 
 
 ## Example
