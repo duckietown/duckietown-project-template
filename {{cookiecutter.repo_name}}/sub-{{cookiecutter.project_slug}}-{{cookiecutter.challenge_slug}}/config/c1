@@ -1,2 +1,0 @@
-algo
-/home/jonas/git/amodproj/duckietown-project-template/{{cookiecutter.repo_name}}/lib-{{cookiecutter.project_slug}}/src/duckietown_{{cookiecutter.project_slug}}
