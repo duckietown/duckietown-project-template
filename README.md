@@ -12,7 +12,7 @@ To create a repository starting from this template, first install the latest Coo
 
 Then you can run:
 
-    $ cookiecutter -c master18 https://github.com/duckietown/duckietown-project-template.git
+    $ cookiecutter -c https://github.com/DaRavenox/duckietown-project-template
 
 Answer the questions and you will create the template for your repository.
 
