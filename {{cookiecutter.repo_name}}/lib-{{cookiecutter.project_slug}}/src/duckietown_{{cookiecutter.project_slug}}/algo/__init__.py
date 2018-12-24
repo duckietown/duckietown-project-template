@@ -1,2 +1,1 @@
-# coding=utf-8
-from .foo import *
+from .myalgorithm import *
