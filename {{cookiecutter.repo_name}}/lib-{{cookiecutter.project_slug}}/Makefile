@@ -4,7 +4,7 @@ all:
 bump-upload:
 	$(MAKE) bump
 	$(MAKE) upload
-	
+
 bump:
 	bumpversion patch
 
@@ -13,7 +13,7 @@ upload:
 	git push
 	rm -f dist/*
 	python setup.py sdist
-	twine upload dist/*
+	twine upload --skip-existing --verbose dist/*
 
 
 comptest_package={{cookiecutter.python_package}}_tests
